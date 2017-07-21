@@ -8,10 +8,12 @@ let ndStart = 5
 let ndEnd = 9
 let nd = ndStart
 let ndDir = 'up'
+let zoff = 100
 
 function setup() {
     createCanvas(640, 360)
     background(127)
+    colorMode(HSB)
 
     pixelDensity(1)
 
@@ -19,8 +21,9 @@ function setup() {
 }
 
 function draw() {
-    render()
-    console.log(frameRate())
+
+    renderSimpleAnimated(zoff)
+    zoff += 0.05
 }
 
 function render() {
@@ -58,8 +61,6 @@ function render() {
         ndDir = 'up'
     }
 
-    console.log(nd)
-
     updatePixels()
 
 }
@@ -74,9 +75,9 @@ function renderSimple() {
         for (let y = 0; y < height; y++) {
 
             let index = (x + y * width) * 4
-            pixels[index] = map(noise(xoff, yoff), 0, 1, 0, 255)
-            pixels[index + 1] = 0
-            pixels[index + 2] = 0
+            pixels[index] = map(noise(xoff, yoff), 0, 1, 0, 359)
+            pixels[index + 1] = map(noise(xoff, yoff), 0, 1, 0, 100)
+            pixels[index + 2] = map(noise(xoff, yoff), 0, 1, 80, 100)
             pixels[index + 3] = 255
 
             yoff = yoff + 0.01
@@ -85,7 +86,29 @@ function renderSimple() {
     }    
     
     updatePixels()
+}
 
+function renderSimpleAnimated(zoff) {
+    loadPixels()
+
+    let xoff = 0.0
+    for (let x = 0; x < width; x++) {
+
+        let yoff = 0.0
+        for (let y = 0; y < height; y++) {
+
+            let index = (x + y * width) * 4
+            pixels[index] = map(noise(xoff, yoff, zoff), 0, 1, 0, 359)
+            pixels[index + 1] = map(noise(xoff, yoff, zoff), 0, 1, 0, 100)
+            pixels[index + 2] = map(noise(xoff, yoff, zoff), 0, 1, 80, 100)
+            pixels[index + 3] = 255
+
+            yoff = yoff + 0.01
+        }
+        xoff = xoff + 0.01
+    }    
+    
+    updatePixels()
 }
 
 function noiseColor(x, y) {
