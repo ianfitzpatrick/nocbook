@@ -16,13 +16,17 @@ function setup() {
     colorMode(HSB)
 
     pixelDensity(1)
+    noiseSeed(99)
+    noisejs.seed(99)
 
     // render()
 }
 
 function draw() {
 
-    renderSimpleAnimated(zoff)
+    // renderSimpleAnimated(zoff)
+    render()
+    // renderSimple()
     zoff += 0.05
 }
 
@@ -98,9 +102,9 @@ function renderSimpleAnimated(zoff) {
         for (let y = 0; y < height; y++) {
 
             let index = (x + y * width) * 4
-            pixels[index] = map(noise(xoff, yoff, zoff), 0, 1, 0, 359)
-            pixels[index + 1] = map(noise(xoff, yoff, zoff), 0, 1, 0, 100)
-            pixels[index + 2] = map(noise(xoff, yoff, zoff), 0, 1, 80, 100)
+            pixels[index] = map(noisejs.perlin3(xoff, yoff, zoff), -1, 1, 0, 359)
+            pixels[index + 1] = map(noisejs.perlin3(xoff, yoff, zoff), -1, 1, 0, 100)
+            pixels[index + 2] = map(noisejs.perlin3(xoff, yoff, zoff), -1, 1, 80, 100)
             pixels[index + 3] = 255
 
             yoff = yoff + 0.01
@@ -112,8 +116,11 @@ function renderSimpleAnimated(zoff) {
 }
 
 function noiseColor(x, y) {
-    return map(
-        noise(x, y),
-        0, 1,
+    let noiseVal = noisejs.perlin2(x, y)
+    // let noiseVal = noise(x, y)
+    // console.log(noiseVal)
+    return map(        
+        noiseVal,
+        -1, 1,
         0, 255)
 }
