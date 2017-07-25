@@ -5,7 +5,7 @@ const trippy = true
 function setup() {
     createCanvas(750, 750)
     colorMode(HSB)
-    background(0, 100, 0)     
+    background(0, 100, 0) 
 
     if (trippy) {
         frameRate(10)

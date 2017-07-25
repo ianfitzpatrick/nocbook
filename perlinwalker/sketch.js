@@ -4,12 +4,13 @@ let walker
 // eslint-disable-next-line
 function setup() {
     createCanvas(640, 360)
-    background(0)
     walker = new Walker()
+    background(0)
 }
 
 // eslint-disable-next-line
 function draw() {
+
     walker.step()
     walker.render()
 }
