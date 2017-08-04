@@ -8,7 +8,8 @@ float [][] terrain;
 
 void setup() {
   size(600, 600, P3D);
- 
+    
+     frameRate(20);
     cols = w / scl;
     rows = h / scl;
   
@@ -39,7 +40,7 @@ void draw() {
 
     translate(0, 400);
     background(0);
-    noStroke();
+    // noStroke();
     
     rotateX(PI/3);
     translate(-w / 3, -h /3 );
@@ -54,4 +55,3 @@ void draw() {
         endShape();
     }
 }
-

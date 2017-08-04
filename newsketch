@@ -1,8 +1,13 @@
 #!/bin/bash
 
+echo "Name of chapter (no spaces):"
+
+read chapdir
+
 echo "Name of new sketch (no spaces):"
 
 read dirname
 
-mkdir $dirname
-cp ./template/* $dirname/
+mkdir $chapdir
+mkdir $chapdir/$dirname
+cp ./template/* $chapdir/$dirname/
