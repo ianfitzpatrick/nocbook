@@ -17,8 +17,14 @@ function setup() {
 
 // eslint-disable-next-line
 function draw() {
-    walker.exponentialChanceStep()
+    walker.algo()
     walker.render()
+}
+
+function keyPressed() {
+    if (keyCode == 32) {
+        walker.cycle()
+    }
 }
 
 function consoleXY(obj) {
@@ -33,6 +39,32 @@ class Walker {
     constructor() {
         this.x = width/2
         this.y = height/2
+        this.label = ''
+
+        this.algos = [
+            'step', 'nineStep', 'floatStep', 'badLevyStep', 'exponentialChanceStep',
+            'monteCarloStep', 'rightStep', 
+        ]
+        this.currentAlgo = 0
+    }
+
+    algo() {
+        let currentAlgo = this.algos[this.currentAlgo]
+        this[currentAlgo]()
+    }
+
+    cycle() {
+        clear()
+        background(127)
+        this.currentAlgo ++
+
+        if (this.currentAlgo == this.algos.length) {
+            this.currentAlgo = 0
+        }
+
+        this.x = width/2
+        this.y = height/2
+        
     }
 
     render() {
@@ -40,6 +72,14 @@ class Walker {
         // ellipse(this.x, this.y, 16, 16)
         stroke(0)
         point(this.x,this.y)
+
+
+        // fill(0, 102, 153)
+        noStroke()
+        fill(255, 255, 255)
+        textSize(32);
+        text(this.label, 20, height - 20)
+
     }
 
     step() {
@@ -60,6 +100,8 @@ class Walker {
         
         this.x = constrain(this.x, 0, width - 1)
         this.y = constrain(this.y, 0, height - 1)        
+
+        this.label = 'Step'
     }
 
     nineStep() {
@@ -70,6 +112,7 @@ class Walker {
 
         this.x += stepX
         this.y += stepY
+        this.label = 'Nine Step'
 
     }
 
@@ -81,6 +124,8 @@ class Walker {
 
         this.x += stepX
         this.y += stepY
+
+        this.label = 'Float Step'
     }
 
     badLevyStep() {
@@ -97,6 +142,8 @@ class Walker {
 
         this.x += stepX
         this.y += stepY
+
+        this.label = 'Bad Levy Step'
     }    
 
     exponentialChanceStep() {
@@ -109,6 +156,8 @@ class Walker {
 
         this.x += stepX
         this.y += stepY
+
+        this.label = 'Exponential Chance Step'
 
     }
 
@@ -139,6 +188,8 @@ class Walker {
 
         this.x += stepX
         this.y += stepY
+
+        this.label = 'Monte Carlo Step'        
     }
 
     rightStep() {
@@ -153,6 +204,8 @@ class Walker {
         } else {
             this.y--
         }
+
+        this.label = 'Right Step'
     }
 
 
